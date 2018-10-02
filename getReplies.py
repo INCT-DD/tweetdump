@@ -18,7 +18,7 @@ mongoHost = "127.0.0.1"
 mongoPort = "27017"
 
 ##################################
-replies=[] 
+replies={} 
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)  
 
 name= ""
@@ -28,7 +28,7 @@ for full_tweets in tweepy.Cursor(api.user_timeline,screen_name=name,timeout=9999
 
     if hasattr(tweet, 'in_reply_to_status_id_str'):
       if (tweet.in_reply_to_status_id_str==full_tweets.id_str):
-        replies.append(tweet.text)
+        replies[full_tweets.id_str]= tweet.text
 
   print("Tweet :",full_tweets.text.translate(non_bmp_map))
   
