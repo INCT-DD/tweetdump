@@ -7,6 +7,8 @@ import pymongo
 import sys
 
 # MONGODB AUTH DATA
+mongoUser = ""  
+mongoPasswd = ""
 mongoHost = "127.0.0.1"
 mongoPort = "27017"
 
@@ -18,6 +20,8 @@ searchParameters = twint.Config()
 
 searchParameters.Output = "tweets.json"
 searchParameters.Search = "EleNao"
+searchParameters.Since = "2018-10-01"
+#searchParameters.Until = "2018-08-01"
 searchParameters.Stats = True
 searchParameters.Store_json = True
 searchParameters.Profile_full = True
