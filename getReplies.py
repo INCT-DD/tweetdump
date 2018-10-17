@@ -1,5 +1,6 @@
 import tweepy
 import sys
+import csv
 import pymongo
 from bson import json_util
 
@@ -37,7 +38,9 @@ def process_or_store(tweet):
     
 
 #TRACK THE TWEET REPLIES    
-non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)  
+non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+csvFile = open('result.csv', 'a')
+csvWriter = csv.writer(csvFile)
 
 name= ""
 for full_tweets in tweepy.Cursor(api.user_timeline,screen_name=name,timeout=999999).items(1):
@@ -48,3 +51,7 @@ for full_tweets in tweepy.Cursor(api.user_timeline,screen_name=name,timeout=9999
                 #print("Tweet :",full_tweets.text.translate(non_bmp_map))
                 #print(tweet.user.screen_name, " reply: ", tweet.text)
                 process_or_store(tweet._json)
+                csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
+                print (tweet.created_at, tweet.text)
+
+    csvFile.close()
